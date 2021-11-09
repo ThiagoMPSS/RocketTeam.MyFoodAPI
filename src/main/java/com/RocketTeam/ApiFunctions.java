@@ -131,7 +131,8 @@ public class ApiFunctions {
 		JSONObject restaurante = (JSONObject) objs.get("Restaurante");
 		JSONArray tels = (JSONArray) objs.get("Telefones");
 		JSONArray ends = (JSONArray) objs.get("Enderecos");
-				
+		System.out.println(restaurante);
+		
 		List<Telefone> telsList = new ArrayList<Telefone>();
 		List<Endereco> endsList = new ArrayList<Endereco>();
 		
@@ -162,6 +163,11 @@ public class ApiFunctions {
 		IDao dao = GetDao(Tabela);
 		ModelDefault model = GetModel(Tabela, objs);
 		return dao.update(model);
+	}
+	
+	public static boolean UpdateInfos(String Tabela, JSONObject objs) throws Exception {
+		RestauranteInfos rest = GetModelRestInfos(objs);
+		return rest.update();
 	}
 	
 	public static ModelDefault Get(String Tabela, long Pk) throws Exception {

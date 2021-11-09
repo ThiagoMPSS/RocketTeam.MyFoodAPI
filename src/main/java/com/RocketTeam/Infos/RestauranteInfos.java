@@ -1,6 +1,7 @@
 package com.RocketTeam.Infos;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -81,26 +82,39 @@ public class RestauranteInfos {
 	public boolean add() throws Exception {
 		boolean adicionado = true;
 		Connection conn = ConnManager.getInstance().getConnection();
-		conn.setAutoCommit(false);
-		
-		Rest = (Restaurante) new RestauranteDao().add(Rest, conn);
-		
-		adicionado = adicionado ? Rest != null : false;
-		if (adicionado) {
-			for (Telefone tel : Tels) {
-				tel.setRest_id((long)Rest.getPk());
-				adicionado = adicionado ? new TelefoneDao().add(tel, conn) != null : false;
+		try {
+			conn.setAutoCommit(false);
+			
+			Rest = (Restaurante) new RestauranteDao().add(Rest, conn);
+			
+			adicionado = adicionado ? Rest != null : false;
+			if (adicionado) {
+				for (Telefone tel : Tels) {
+					tel.setRest_id((long)Rest.getPk());
+					adicionado = adicionado ? new TelefoneDao().add(tel, conn) != null : false;
+				}
+				for (Endereco end : Ends) {
+					end.setRest_id((long)Rest.getPk());
+					adicionado = adicionado ? new EnderecoDao().add(end, conn) != null : false;
+				}
 			}
-			for (Endereco end : Ends) {
-				end.setRest_id((long)Rest.getPk());
-				adicionado = adicionado ? new EnderecoDao().add(end, conn) != null : false;
-			}
-		}
-		
-		if (!adicionado)
-			conn.rollback();
-		else
-			conn.commit();
+			
+			if (!adicionado)
+				conn.rollback();
+			else
+				conn.commit();
+		} catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            try {
+            	if (conn.getAutoCommit())
+            		conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+                throw e;
+            }
+        }
 		
 		return adicionado;
 	}
@@ -108,41 +122,68 @@ public class RestauranteInfos {
 	public boolean update() throws Exception {
 		boolean adicionado = true;
 		Connection conn = ConnManager.getInstance().getConnection();
-		conn.setAutoCommit(false);
-		
-		adicionado = adicionado ? new RestauranteDao().update(Rest, conn) : false;
-		for (Telefone tel : Tels) {
-			adicionado = adicionado ? new TelefoneDao().update(tel, conn) : false;
-		}
-		for (Endereco end : Ends) {
-			adicionado = adicionado ? new EnderecoDao().update(end, conn) : false;
-		}
-		
-		if (!adicionado)
-			conn.rollback();
-		else
-			conn.commit();
-		
+		try {
+			conn.setAutoCommit(false);
+			
+			adicionado = adicionado ? new RestauranteDao().update(Rest, conn) : false;
+			for (Telefone tel : Tels) {
+				tel.setRest_id(Rest.getId());
+				adicionado = adicionado ? new TelefoneDao().update(tel, conn) : false;
+			}
+			for (Endereco end : Ends) {
+				end.setRest_id(Rest.getId());
+				adicionado = adicionado ? new EnderecoDao().update(end, conn) : false;
+			}
+			
+			if (!adicionado)
+				conn.rollback();
+			else
+				conn.commit();
+		} catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            try {
+            	if (conn.getAutoCommit())
+            		conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+                throw e;
+            }
+        }
 		return adicionado;
 	}
 	
 	public boolean delete() throws Exception {
 		boolean adicionado = true;
 		Connection conn = ConnManager.getInstance().getConnection();
-		conn.setAutoCommit(false);
-		
-		adicionado = adicionado ? new RestauranteDao().delete(Rest.getId(), conn) : false;
-		for (Telefone tel : Tels) {
-			adicionado = adicionado ? new TelefoneDao().delete(tel.getId(), conn) : false;
-		}
-		for (Endereco end : Ends) {
-			adicionado = adicionado ? new EnderecoDao().delete(end.getId(), conn) : false;
-		}
-		
-		if (!adicionado)
-			conn.rollback();
-		else
-			conn.commit();
+		try {
+			conn.setAutoCommit(false);
+			
+			adicionado = adicionado ? new RestauranteDao().delete(Rest.getId(), conn) : false;
+			for (Telefone tel : Tels) {
+				adicionado = adicionado ? new TelefoneDao().delete(tel.getId(), conn) : false;
+			}
+			for (Endereco end : Ends) {
+				adicionado = adicionado ? new EnderecoDao().delete(end.getId(), conn) : false;
+			}
+			
+			if (!adicionado)
+				conn.rollback();
+			else
+				conn.commit();
+		} catch (SQLException e) {
+	        e.printStackTrace();
+	        throw e;
+	    } finally {
+	        try {
+	        	if (conn.getAutoCommit())
+	        		conn.close();
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	            throw e;
+	        }
+	    }
 		
 		return adicionado;
 	}

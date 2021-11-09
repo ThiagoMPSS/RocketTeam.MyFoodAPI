@@ -248,7 +248,7 @@ public class TelefoneDao implements IDao {
             pstmt.setLong(1, telefone.getRest_id());
             pstmt.setInt(2, telefone.getDDD());
             pstmt.setInt(3, telefone.getNumero());
-            pstmt.setLong(7, telefone.getId());
+            pstmt.setLong(4, telefone.getId());
             
             pstmt.executeUpdate();
             return true;

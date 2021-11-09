@@ -138,6 +138,21 @@ public class Program extends HttpServlet {
 					}
 					return;
 				}
+				case "update": {
+					JSONObject formDados = (JSONObject) body.get("Dados");
+					if (Tabela.toLowerCase().equals("restaurante*")) {
+						if (ApiFunctions.UpdateInfos(Tabela, formDados))
+							CriarHeaderStatus(response, HttpServletResponse.SC_OK);
+						else 
+							CriarHeaderStatus(response, HttpServletResponse.SC_NOT_FOUND);
+					} else {
+						if (ApiFunctions.Update(Tabela, formDados))
+							CriarHeaderStatus(response, HttpServletResponse.SC_OK);
+						else 
+							CriarHeaderStatus(response, HttpServletResponse.SC_NOT_FOUND);
+					}
+					return;
+				}
 			}
 		} catch (Exception ex) {
 			CriarHeaderStatus(response, HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
