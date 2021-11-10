@@ -91,7 +91,7 @@ public class Program extends HttpServlet {
 						} else if (Fk > -1){
 							ModelDefault[] ret = ApiFunctions.GetArray(Tabela, Fk);
 							if (ret != null) {
-								System.out.println(ret.length);
+//								System.out.println(ret.length);
 								if (ret.length > 0) {
 									CriarHeaderJson(response);
 									writer.append(ModelsToJson(ret));
@@ -189,27 +189,5 @@ public class Program extends HttpServlet {
 		response.addHeader("Access-Control-Allow-Origin", "*");
 		response.sendError(StatusCode);
 	}
-	
-	/*private Map<String, String> ReadBodyParams(BufferedReader reader) throws IOException {
-		String body = "";
-		while (true) {
-			String line = reader.readLine();
-			if (line == null)
-				break;
-			body += line + "\n";
-		}
-		Map<String, String> ret = new HashMap<String, String>();
-		for (String s : body.split("&")) {
-			if (s.length() < 2)
-				continue;
-			String[] args = s.split("=");
-			String nome = args[0];
-			String valor = args[1];
-			
-			ret.put(nome, valor.replace("å", "=").replace("¯", "&"));
-			System.out.println(nome + ":" + valor);
-		}
-		return ret;
-	}*/
 
 }

@@ -103,7 +103,7 @@ public class TelefoneDao implements IDao {
     }
 
 	public ModelDefault add(Telefone telefone, Connection conn) throws Exception {
-		System.out.println("Teste: " + telefone.getRest_id());
+//		System.out.println("Teste: " + telefone.getRest_id());
         return add((ModelDefault) telefone, conn);
     }
 	

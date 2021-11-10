@@ -43,11 +43,11 @@ public class ApiFunctions {
 					rest_id = Long.parseLong((String) objs.get(Telefone.Colunas.Rest_Id.toUpperCase()));
 				int DDD = Integer.parseInt((String) objs.get(Telefone.Colunas.DDD.toUpperCase()));
 				int Numero = Integer.parseInt((String) objs.get(Telefone.Colunas.Numero.toUpperCase()));
-				System.out.println("Telefone:");
-				System.out.println("	Id:" +  id);
-				System.out.println("	rest_id:" + rest_id);
-				System.out.println("	DDD:" + DDD);
-				System.out.println("	Numero:" + Numero);
+//				System.out.println("Telefone:");
+//				System.out.println("	Id:" +  id);
+//				System.out.println("	rest_id:" + rest_id);
+//				System.out.println("	DDD:" + DDD);
+//				System.out.println("	Numero:" + Numero);
 				
 				return new Telefone(id, rest_id, DDD, Numero);
 			}
@@ -63,14 +63,14 @@ public class ApiFunctions {
 				String bairro = (String) objs.get(Endereco.Colunas.Bairro.toUpperCase());
 				String cidade = (String) objs.get(Endereco.Colunas.Cidade.toUpperCase());
 				String estado = (String) objs.get(Endereco.Colunas.Estado.toUpperCase());
-				System.out.println("Endereço:");
-				System.out.println("	Id:" + id);
-				System.out.println("	Rest_ID:" + rest_id);
-				System.out.println("	Logradouro:" + logradouro);
-				System.out.println("	NR:" + nr);
-				System.out.println("	Bairro:" + bairro);
-				System.out.println("	Cidade:" + cidade);
-				System.out.println("	Estado:" + estado);
+//				System.out.println("Endereço:");
+//				System.out.println("	Id:" + id);
+//				System.out.println("	Rest_ID:" + rest_id);
+//				System.out.println("	Logradouro:" + logradouro);
+//				System.out.println("	NR:" + nr);
+//				System.out.println("	Bairro:" + bairro);
+//				System.out.println("	Cidade:" + cidade);
+//				System.out.println("	Estado:" + estado);
 				
 				if (id > -1)
 					return new Endereco(id, rest_id, logradouro, nr, bairro, cidade, estado);
@@ -104,16 +104,16 @@ public class ApiFunctions {
 			    int nr_funcionarios = Integer.parseInt((String) objs.get(Restaurante.Colunas.nr_funcionarios.toUpperCase()));
 			    boolean retirada_presencial = Boolean.parseBoolean((String) objs.get(Colunas.retirada_presencial.toUpperCase()));
 			    boolean entrega_propria = Boolean.parseBoolean((String) objs.get(Colunas.entrega_propria.toUpperCase()));
-			    System.out.println("Restaurante:");
-			    System.out.println("	CNPJ:" + cnpj);
-			    System.out.println("	EMAIL:" + email);
-			    System.out.println("	NM Fantasia:" + nm_fantasia);
-			    System.out.println("	DS Especialidade:" + ds_especialidade);
-			    System.out.println("	HR Abertura:" + hr_abertura);
-			    System.out.println("	HR Fechamento:" + hr_fechamento);
-			    System.out.println("	NR Funcionarios:" + nr_funcionarios);
-			    System.out.println("	Retirada Presencial:" + retirada_presencial);
-			    System.out.println("	Entrega Propria:" + entrega_propria);
+//			    System.out.println("Restaurante:");
+//			    System.out.println("	CNPJ:" + cnpj);
+//			    System.out.println("	EMAIL:" + email);
+//			    System.out.println("	NM Fantasia:" + nm_fantasia);
+//			    System.out.println("	DS Especialidade:" + ds_especialidade);
+//			    System.out.println("	HR Abertura:" + hr_abertura);
+//			    System.out.println("	HR Fechamento:" + hr_fechamento);
+//			    System.out.println("	NR Funcionarios:" + nr_funcionarios);
+//			    System.out.println("	Retirada Presencial:" + retirada_presencial);
+//			    System.out.println("	Entrega Propria:" + entrega_propria);
 				
 			    if (id > -1)
 			    	return new Restaurante(id, cnpj, email, nm_fantasia, ds_especialidade, hr_abertura, hr_fechamento,
@@ -144,7 +144,7 @@ public class ApiFunctions {
 		endsList.toArray(endsArray);
 		
 		Restaurante restaurante = (Restaurante) GetModel("Restaurante", restauranteJson);
-		System.out.println(Id);
+//		System.out.println(Id);
 		if (Id > -1)
 			restaurante.setId(Id);
 		
