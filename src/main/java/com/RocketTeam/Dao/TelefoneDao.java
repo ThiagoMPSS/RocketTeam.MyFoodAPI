@@ -265,6 +265,46 @@ public class TelefoneDao implements IDao {
             }
         }
 	}
+	
+	public Boolean updateByFk(Telefone obj, Connection conn) throws Exception {
+		return updateByFk((ModelDefault) obj, conn);
+	}
+	
+	public Boolean updateByFk(Telefone obj) throws Exception {
+		return updateByFk((ModelDefault) obj);
+	}
+
+	@Override
+	public Boolean updateByFk(ModelDefault obj) throws Exception {
+		return updateByFk(obj, conInst.getConnection());
+	}
+
+	@Override
+	public Boolean updateByFk(ModelDefault obj, Connection conn) throws Exception {
+		Telefone telefone = (Telefone) obj;
+
+        try {
+            PreparedStatement pstmt = conn.prepareStatement("update telefone set"
+            		+ " nr_ddd = ?, nr_telefone = ? where restaurante_id = ?");
+            pstmt.setInt(1, telefone.getDDD());
+            pstmt.setInt(2, telefone.getNumero());
+            pstmt.setLong(3, telefone.getRest_id());
+            
+            pstmt.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            try {
+            	if (conn.getAutoCommit())
+            		conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+                throw e;
+            }
+        }
+	}
 
 	@Override
 	public int getLastIndex() throws Exception {

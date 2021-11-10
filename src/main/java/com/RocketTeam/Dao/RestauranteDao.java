@@ -240,6 +240,24 @@ public class RestauranteDao implements IDao {
             }
         }
 	}
+	
+	public Boolean updateByFk(Restaurante obj) throws Exception {
+		return updateByFk((ModelDefault) obj);
+	}
+
+	public Boolean updateByFk(Restaurante obj, Connection conn) throws Exception {
+		return updateByFk((ModelDefault) obj, conn);
+	}
+	
+	@Override
+	public Boolean updateByFk(ModelDefault obj) throws Exception {
+		return updateByFk(obj, conInst.getConnection());
+	}
+	
+	@Override
+	public Boolean updateByFk(ModelDefault obj, Connection conn) throws Exception {
+		return false;
+	}
 
 	@Override
 	public int getLastIndex() throws Exception {

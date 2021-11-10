@@ -18,6 +18,8 @@ public interface IDao {
 	Boolean delete() throws Exception;
 	Boolean update(ModelDefault obj, Connection conn) throws Exception;
 	Boolean update(ModelDefault obj) throws Exception;
+	Boolean updateByFk(ModelDefault obj, Connection conn) throws Exception;
+	Boolean updateByFk(ModelDefault obj) throws Exception;
 	
 	//Retorna o ultimo valor da chave primaria
 	int getLastIndex() throws Exception;

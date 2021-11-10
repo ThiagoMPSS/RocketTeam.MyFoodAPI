@@ -33,7 +33,6 @@ public class Program extends HttpServlet {
 			}
 			CriarHeaderStatus(response, HttpServletResponse.SC_BAD_REQUEST);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}		
 	}
@@ -141,7 +140,7 @@ public class Program extends HttpServlet {
 				case "update": {
 					JSONObject formDados = (JSONObject) body.get("Dados");
 					if (Tabela.toLowerCase().equals("restaurante*")) {
-						if (ApiFunctions.UpdateInfos(Tabela, formDados))
+						if (ApiFunctions.UpdateInfos(Tabela, formDados, Pk))
 							CriarHeaderStatus(response, HttpServletResponse.SC_OK);
 						else 
 							CriarHeaderStatus(response, HttpServletResponse.SC_NOT_FOUND);

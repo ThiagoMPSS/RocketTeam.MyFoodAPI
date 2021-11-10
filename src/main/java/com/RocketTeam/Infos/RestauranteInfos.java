@@ -128,11 +128,11 @@ public class RestauranteInfos {
 			adicionado = adicionado ? new RestauranteDao().update(Rest, conn) : false;
 			for (Telefone tel : Tels) {
 				tel.setRest_id(Rest.getId());
-				adicionado = adicionado ? new TelefoneDao().update(tel, conn) : false;
+				adicionado = adicionado ? new TelefoneDao().updateByFk(tel, conn) : false;
 			}
 			for (Endereco end : Ends) {
 				end.setRest_id(Rest.getId());
-				adicionado = adicionado ? new EnderecoDao().update(end, conn) : false;
+				adicionado = adicionado ? new EnderecoDao().updateByFk(end, conn) : false;
 			}
 			
 			if (!adicionado)

@@ -253,7 +253,7 @@ public class EnderecoDao implements IDao {
 		Endereco endereco = (Endereco) obj;
 
         try {
-            PreparedStatement pstmt = conn.prepareStatement("update endereco set  restaurante_id = ?,"
+            PreparedStatement pstmt = conn.prepareStatement("update endereco set restaurante_id = ?,"
             		+ " ds_logradouro = ?,  nr_endereco = ?,  nm_bairro = ?,  nm_cidade = ?,  nm_estado = ? where cd_endereco = ?");
             pstmt.setLong(1, endereco.getRest_id());
             pstmt.setString(2, endereco.getLogradouro());
@@ -262,6 +262,49 @@ public class EnderecoDao implements IDao {
             pstmt.setString(5, endereco.getCidade());
             pstmt.setString(6, endereco.getEstado());
             pstmt.setLong(7, endereco.getId());
+            
+            pstmt.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            try {
+            	if (conn.getAutoCommit())
+            		conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+                throw e;
+            }
+        }
+	}
+	
+	public Boolean updateByFk(Endereco obj) throws Exception {
+		return updateByFk((ModelDefault) obj, conInst.getConnection());
+	}
+
+	public Boolean updateByFk(Endereco obj, Connection conn) throws Exception {
+		return updateByFk((ModelDefault) obj, conn);
+	}
+
+	@Override
+	public Boolean updateByFk(ModelDefault obj) throws Exception {
+		return updateByFk(obj, conInst.getConnection());
+	}
+	
+	@Override
+	public Boolean updateByFk(ModelDefault obj, Connection conn) throws Exception {
+		Endereco endereco = (Endereco) obj;
+
+        try {
+            PreparedStatement pstmt = conn.prepareStatement("update endereco set"
+            		+ " ds_logradouro = ?,  nr_endereco = ?,  nm_bairro = ?,  nm_cidade = ?,  nm_estado = ? where restaurante_id = ?");
+            pstmt.setString(1, endereco.getLogradouro());
+            pstmt.setLong(2, endereco.getNr());
+            pstmt.setString(3, endereco.getBairro());
+            pstmt.setString(4, endereco.getCidade());
+            pstmt.setString(5, endereco.getEstado());
+            pstmt.setLong(6, endereco.getRest_id());
             
             pstmt.executeUpdate();
             return true;

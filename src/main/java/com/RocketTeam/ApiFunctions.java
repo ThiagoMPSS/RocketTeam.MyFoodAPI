@@ -127,11 +127,10 @@ public class ApiFunctions {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public static RestauranteInfos GetModelRestInfos(JSONObject objs) {
-		JSONObject restaurante = (JSONObject) objs.get("Restaurante");
-		JSONArray tels = (JSONArray) objs.get("Telefones");
-		JSONArray ends = (JSONArray) objs.get("Enderecos");
-		System.out.println(restaurante);
+	public static RestauranteInfos GetModelRestInfos(JSONObject Objs, long Id) {
+		JSONObject restauranteJson = (JSONObject) Objs.get("Restaurante");
+		JSONArray tels = (JSONArray) Objs.get("Telefones");
+		JSONArray ends = (JSONArray) Objs.get("Enderecos");
 		
 		List<Telefone> telsList = new ArrayList<Telefone>();
 		List<Endereco> endsList = new ArrayList<Endereco>();
@@ -144,8 +143,12 @@ public class ApiFunctions {
 		telsList.toArray(telsArray);
 		endsList.toArray(endsArray);
 		
-		return new RestauranteInfos((Restaurante) GetModel("Restaurante", restaurante),
-									telsArray, endsArray);
+		Restaurante restaurante = (Restaurante) GetModel("Restaurante", restauranteJson);
+		System.out.println(Id);
+		if (Id > -1)
+			restaurante.setId(Id);
+		
+		return new RestauranteInfos(restaurante, telsArray, endsArray);
 	}
 	
 	public static boolean Add(String Tabela, JSONObject objs) throws Exception {
@@ -155,7 +158,7 @@ public class ApiFunctions {
 	}
 	
 	public static boolean AddInfos(String Tabela, JSONObject objs) throws Exception {
-		RestauranteInfos rest = GetModelRestInfos(objs);
+		RestauranteInfos rest = GetModelRestInfos(objs, -1);
 		return rest.add();
 	}
 	
@@ -165,8 +168,8 @@ public class ApiFunctions {
 		return dao.update(model);
 	}
 	
-	public static boolean UpdateInfos(String Tabela, JSONObject objs) throws Exception {
-		RestauranteInfos rest = GetModelRestInfos(objs);
+	public static boolean UpdateInfos(String Tabela, JSONObject objs, long Id) throws Exception {
+		RestauranteInfos rest = GetModelRestInfos(objs, Id);
 		return rest.update();
 	}
 	
@@ -195,7 +198,6 @@ public class ApiFunctions {
 		
 		if (Pk > -1) {
 			if (Tabela.toLowerCase().equals("restaurante")) {
-				System.out.println("Delete Restaurante");
 				boolean deletado = new TelefoneDao().deleteByFk(Pk);
 				deletado = deletado ? new EnderecoDao().deleteByFk(Pk) : false;
 				return deletado ? new RestauranteDao().delete(Pk) : false;
